@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Suspendida list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fechainicio</th>
+                <th>Fechafin</th>
+                <th>Dias</th>
+                <th>Motivo</th>
+                <th>Creadoel</th>
+                <th>Modificadoel</th>
+                <th>Estado</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for suspendida in suspendidas %}
+            <tr>
+                <td><a href="{{ path('suspendida_show', { 'id': suspendida.id }) }}">{{ suspendida.id }}</a></td>
+                <td>{% if suspendida.fechaInicio %}{{ suspendida.fechaInicio|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if suspendida.fechaFin %}{{ suspendida.fechaFin|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ suspendida.dias }}</td>
+                <td>{{ suspendida.motivo }}</td>
+                <td>{% if suspendida.creadoEl %}{{ suspendida.creadoEl|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if suspendida.modificadoEl %}{{ suspendida.modificadoEl|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ suspendida.estado }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('suspendida_show', { 'id': suspendida.id }) }}">show</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

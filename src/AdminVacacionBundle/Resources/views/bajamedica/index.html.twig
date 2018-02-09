@@ -1,0 +1,147 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheet%}}
+<style>
+  a{
+    color:#E0E0E0;
+  }
+</style>
+{% endblock%}
+{% block page_content %}
+
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Listado <small>Registro de Bajas Medicas</small></h2>
+                    <!-- ----------------------------------------------- -->
+
+                    <div class="title_right">
+                         <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                         <a  class="btn btn-success" href="{{path('bajamedica_new')}}" >
+                                            <i class="glyphicon glyphicon-plus-sign"> NUEVA BAJA MEDICA</i>
+                                        </a>
+                         </div>
+                       </div>
+                      <!-- ------------------------------------ -->
+
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+                    <div class="well" style="overflow: auto">
+                        {{form_start(formBuscar, {'attr': {'class': 'form-horizontal'}})}}
+
+
+                        <div class="control-group">
+                          <table width=100% >
+                            <tbody>
+                              <tr>
+                                <td width=70%>{{form_row(formBuscar.empleado)}}</td>
+                                <td align="right">{{form_row(formBuscar.buscar)}}</td>
+                                <td align="center">{{form_row(formBuscar.todos)}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+                      {{form_end(formBuscar)}}
+
+                    </div>
+                    <div class="table-responsive">
+
+                     <b>Cod. Empleado :{{app.session.get('buscarE')}}</b>
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">{{knp_pagination_sortable(bajamedicas,'Nº','p.id')}}</th>
+                            <th class="column-title">Empleado</th>
+                            <th class="column-title">{{knp_pagination_sortable(bajamedicas,'Fecha de Inicio','p.desdeEl')}}</th>
+                            <th class="column-title">{{knp_pagination_sortable(bajamedicas,'Fecha Fin','p.hastaEl')}}</th>
+                            <th class="column-title">{{knp_pagination_sortable(bajamedicas,'Tipo','p.tipo')}}</th>
+                            <th class="column-title">{{knp_pagination_sortable(bajamedicas,'Estado','p.estado')}}</th>
+                            <th class="column-title">Opcion</th>
+
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          {% for bajamedica  in bajamedicas %}
+                                <tr>
+                                    <td>
+                                    {% if bajamedica.proHastaEl  and bajamedica.proHastaEl|date('Y-m-d')<'2017-10-01' %}
+                                    <span class="badge badge-success">
+                                    {{bajamedica.id}}
+                                    </span>
+                                    {% else %}
+                                    {{bajamedica.id}}
+                                    {% endif %}
+                                    </td>
+                                    <td>{{bajamedica.empleado}}</td>
+                                    <td>{% if bajamedica.desdeEl %}
+
+                                    {{ bajamedica.desdeEl|date('Y-m-d') }}{% endif %}
+
+                                    </td>
+                                    <td>{% if bajamedica.hastaEl %}
+
+                                    {{ bajamedica.hastaEl|date('Y-m-d') }}
+
+                                    {% endif %}
+
+                                    {% if bajamedica.proHastaEl 
+                                    and bajamedica.proDesdeEl|date('Y-m-d')<'2017-10-01' 
+                                    and bajamedica.proHastaEl|date('Y-m-d')>='2017-10-01' %}
+
+                                    {{ bajamedica.proHastaEl|date('Y-m-d') }}
+
+
+                                    {% endif %}</td>
+                                    <td>{% if  bajamedica.tipo =='E'%}
+                                        <span>Enfermedad</span>
+                                        {% elseif bajamedica.tipo =='M'%}
+                                        <span>Maternidad</span>
+                                        {% elseif bajamedica.tipo =='X'%}
+                                        <span>Maternidad Total</span>
+                                        {% elseif bajamedica.tipo =='A'%}
+                                            <span>Accidente de Trabajo</span>
+                                        {% elseif bajamedica.tipo =='R'%}
+                                        <span>Riesgo Profesional</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if  bajamedica.estado =='B'%}
+                                        <span>Borrador</span>
+                                        {% elseif bajamedica.estado =='L'%}
+                                        <span>Limpio</span>
+                                        {% elseif bajamedica.estado =='P'%}
+                                        <span>Procesado</span>
+                                        {% elseif bajamedica.estado =='T'%}
+                                        <span>Traspasado</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if  bajamedica.estado =='P'%}
+                                        <a href="{{ path('bajamedica_edit', { 'id': bajamedica.id }) }}" class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                        <a href="{{ path('bajamedica_delete', { 'id': bajamedica.id }) }}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                      </table>
+                      <div class="navigation">
+                          {{ knp_pagination_render(bajamedicas) }}
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+{% endblock %}
+{% block javascripts %}
+                {{ form_javascript(formBuscar) }}
+{% endblock javascripts %}

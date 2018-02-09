@@ -1,0 +1,30 @@
+admin_vacacion_vacacion_mod:
+    resource: "@AdminVacacionBundle/Controller/VacacionModController.php"
+    type:     annotation
+
+admin_vacacion_suspendida:
+    resource: "@AdminVacacionBundle/Controller/SuspendidaController.php"
+    type:     annotation
+
+admin_vacacion_vacacion_cabecera:
+    resource: "@AdminVacacionBundle/Controller/VacacionCabeceraController.php"
+    type:     annotation
+
+admin_vacacion_permiso:
+    resource: "@AdminVacacionBundle/Controller/PermisoController.php"
+    type:     annotation
+
+admin_vacacion_vacacion_gestion:
+    resource: "@AdminVacacionBundle/Controller/VacacionGestionController.php"
+    type:     annotation
+
+
+empleado_cps:
+    resource: "@CpsPerArchivoBundle/Controller/"
+    type:     annotation
+
+
+admin_vacacion:
+    resource: "@AdminVacacionBundle/Controller/"
+    type:     annotation
+    prefix:  /emp/adm/

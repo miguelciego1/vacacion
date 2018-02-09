@@ -1,0 +1,15 @@
+<div class="row" >
+        <div class="col-md-12">{{ form_errors(form) }}</div>
+        <div class="form-group row">
+            {{ form_label(form.fechaInicio) }}
+                {{ form_widget(form.fechaInicio) }}
+            {{ form_errors(form.fechaInicio) }}
+
+        </div>
+        <div class="form-group row">
+            {{ form_label(form.dias) }}
+                {{ form_widget(form.dias) }}
+            {{ form_errors(form.dias) }}
+
+        </div>
+</div>

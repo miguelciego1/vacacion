@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block page_content %}
+<div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Listado <small>Registro de Gestiones</small></h2>
+                       <div class="title_right">
+                              <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                                <a class="btn btn-success" href="{{ path('vacaciongestion_new') }}">
+                  							<i class="glyphicon glyphicon-plus-sign"> NUEVA GESTION</i>
+                  						</a>
+                              </div>
+                        </div>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+                    <div class="well" style="overflow: auto">
+                        {{form_start(formBuscar, {'attr': {'class': 'form-horizontal'}})}}
+
+
+                        <div class="control-group">
+                          <table width=100% >
+                            <tbody>
+                              <tr>
+                                <td width=70%>{{form_row(formBuscar.empleado)}}</td>
+                                <td align="right">{{form_row(formBuscar.buscar)}}</td>
+                                <td align="center">{{form_row(formBuscar.todos)}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+                      {{form_end(formBuscar)}}
+
+                    </div>
+
+                    <div class="table-responsive">
+                      <b>Cod. Empleado: {{app.session.get('buscarE')}}</b>
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr class="headings">
+                              <th class="column-title">Opciones</th>
+                             <th class="column-title">{{knp_pagination_sortable(vacacionGestions,'Nº','g.id')}}</th>
+                            <th class="column-title">{{knp_pagination_sortable(vacacionGestions,'Gestion','g.gestion')}}</th>
+                            <th class="column-title">{{knp_pagination_sortable(vacacionGestions,'Corresponde','g.dias')}}</th>
+                            <th class="column-title">{{knp_pagination_sortable(vacacionGestions,'Tomados','g.tomados')}}</th>
+                            <th class="column-title">Dias Restante</th>
+                            <th class="column-title">Cod. Empleado</th>
+                            <th class="column-title">Empleado</th>
+                            <th class="column-title">Tipo de Gestion</th>
+
+
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                                {% for vacacionGestion in vacacionGestions %}
+                                    <tr>
+                                        <td>
+
+
+                                            <li class="btn-group">
+                                                <a href="javascript:;" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i>
+                                                    <span class=" fa fa-angle-down"></span>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    {% if empleado == false %}
+                                                        <li ><a href="{{ path('vacaciongestion_edit', { 'id': vacacionGestion.id }) }}" class="btn btn-xs btn-warning">
+                                                                <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>  <span>Editar</span>
+                                                            </a>
+                                                        </li>
+                                                    {% else %}
+                                                        <li ><a href="{{ path('vacaciongestion_edit_dis', { 'id': vacacionGestion.id }) }}" class="btn btn-xs btn-warning">
+                                                                <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>  <span>Editar</span>
+                                                            </a>
+                                                        </li>
+                                                    {% endif %}
+                                                    <li><a href="{{ path('vacaciongestion_delete', { 'id': vacacionGestion.id }) }}" class="btn btn-xs btn-danger">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>  <span>Eliminar</span>
+                                                        </a>
+
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+                                        </td>
+                                        <td>{{ vacacionGestion.id }}</a></td>
+                                        <td>{{ vacacionGestion.gestion }}</td>
+                                        <td>{{ vacacionGestion.dias }}</td>
+                                        <td>{{ vacacionGestion.tomados }}</td>
+                                        <td>{{vacacionGestion.dias - vacacionGestion.tomados}}</td>
+                                        <td>{{vacacionGestion.empleado.id}}</td>
+                                        <td>{{ vacacionGestion.empleado}}</td>
+                                        <td>{% if vacacionGestion.tipo=='R' %}
+                                            <span class="label label-primary arrowed-in-right arrowed">RADIACION</span>
+                                          {% elseif vacacionGestion.tipo=='N'%}
+                                            <span class="label label-info">NORMAL</span>
+                                          {% endif %}</td>
+
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                      </table>
+                      <div class="navigation">
+                        {{knp_pagination_render(vacacionGestions)}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+{% endblock %}
+{% block javascripts %}
+			    {{ form_javascript(formBuscar) }}
+{% endblock javascripts %}

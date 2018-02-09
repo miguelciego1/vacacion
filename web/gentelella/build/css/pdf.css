@@ -1,0 +1,14 @@
+body {
+border-width: 1px;
+border-style: solid;
+}
+table#logo{
+padding:50px;
+}
+td{
+font-size:120%;
+}
+td#sub{
+     border-bottom: 1px solid #ccc;
+
+}

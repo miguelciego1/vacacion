@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+    #bor{
+    border: 1px;
+    border-collapse: collapse;
+    border-style: groove;
+    }
+</style>
+    </head>
+    <body>
+
+    <table width="100%"  cellspacing="0" cellpadding="0" style="table-layout:fixed font-size:10px";>
+        <thead>
+            <tr>
+                <th colspan="4" id="bor"><h3>Reporte de Bajas Medicas</h3></th>
+            </tr>
+            <tr>
+                <td colspan="2" id="bor"><FONT SIZE=2>Fecha de Emision : {{ "now"|date("m/d/Y") }}</FONT></td>
+                <td colspan="2" id="bor"><FONT SIZE=2>Usuario : {{ app.user.username }}</FONT></td>
+            </tr>
+            <tr>
+                <td id="bor"><FONT SIZE=2>Cantidad Items : {{bajamedicas|length}} </FONT></td>
+                <td id="bor"><FONT SIZE=2>Desde : {{fIni}}</FONT></td>
+                <td id="bor"><FONT SIZE=2>Hasta : {{fFin}}</FONT></td>
+            </tr>
+        </thead>
+    </table>
+    <br>
+    <table width="100%"  cellspacing="0" cellpadding="0" style="table-layout:fixed font-size:10px";>
+        <thead>
+            <tr>
+                <th width="4%" id="bor"><FONT SIZE=2>Correlativo</FONT></th>
+                <th width="4%" id="bor"><FONT SIZE=2>Cod. Empleado</FONT></th>
+                <th width="40%" id="bor"><FONT SIZE=2>Empleado</FONT></th>
+                <th width="18%" id="bor"><FONT SIZE=2>Fecha Inicio</FONT></th>
+                <th width="18%" id="bor"><FONT SIZE=2>Fecha Fin</FONT></th>
+                <th width="18%" id="bor"><FONT SIZE=2>Fecha Registro</FONT></th>
+                <th width="4%" id="bor"><FONT SIZE=2>Usuario</FONT></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for bajamedica in bajamedicas%}
+                <tr style="page-break-inside: avoid";>
+                    <td align="center"><FONT SIZE=2>{{bajamedica.id}}</FONT></td>
+                    <td align="center"><FONT SIZE=2>{{bajamedica.empleado.id}}</FONT></td>
+                    <td><FONT SIZE=2>{{bajamedica.empleado}}</FONT></td>
+                    <td align="center"><FONT SIZE=2>{{bajamedica.desdeEl}}</FONT></td>
+                    <td align="center"><FONT SIZE=2>{{bajamedica.hastaEl}}</FONT></td>
+                    <td align="center"><FONT SIZE=2>{{bajamedica.creadoEl|date("Y-m-d")}}</FONT></td>
+                    <td align="right"><FONT SIZE=2>{{ bajamedica.usuario}}</FONT></td>
+                </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+    </body>
+
+</html>

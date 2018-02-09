@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block page_content %}
+    <h1>Vacacionmods list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Creadoel</th>
+                <th>Motivo</th>
+                <th>Tipo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vacacionMod in vacacionMods %}
+            <tr>
+                <td><a href="{{ path('vacacionmod_show', { 'id': vacacionMod.id }) }}">{{ vacacionMod.id }}</a></td>
+                <td>{% if vacacionMod.creadoEl %}{{ vacacionMod.creadoEl|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ vacacionMod.motivo }}</td>
+                <td>{{ vacacionMod.tipo }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('vacacionmod_show', { 'id': vacacionMod.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('vacacionmod_edit', { 'id': vacacionMod.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('vacacionmod_new') }}">Create a new vacacionMod</a>
+        </li>
+    </ul>
+{% endblock %}

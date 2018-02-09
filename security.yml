@@ -1,0 +1,70 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+    encoders:
+        AdminVacacionBundle\Entity\Usuario:
+            algorithm: md5
+            encode_as_base64: false
+            iterations: 1
+
+        Cps\Empleado\PortalBundle\Entity\Usuario:
+            algorithm: md5
+            encode_as_base64: false
+            iterations: 1
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        usuEmpAdm:
+            entity: { class: AdminVacacionBundle\Entity\Usuario, property: login }
+
+        usuEmpPor:
+            entity: { class: Cps\Empleado\PortalBundle\Entity\Usuario, property: login }
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+            # activate different ways to authenticate
+
+            # http_basic: ~
+            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: ~
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+        EmpAdm:
+            pattern: ^/emp/adm*
+            anonymous: ~
+            provider: usuEmpAdm
+            form_login:
+                login_path: /emp/adm/seguridad/login
+                check_path: /emp/adm/seguridad/logincheck
+                default_target_path: /emp/adm/acceso/registraringreso
+                always_use_default_target_path: true
+            access_denied_url: /emp/adm/seguridad/accesodenegado
+            logout:
+                path: /emp/adm/seguridad/logout
+                target: /emp/adm/acceso/registrarsalida
+
+        EmpPortal:
+            pattern: ^/emp/por*
+            anonymous: ~
+            provider: usuEmpPor
+            form_login:
+                login_path: /emp/por/seguridad/login
+                check_path: /emp/por/seguridad/logincheck
+                default_target_path: /emp/por/acceso/registraringreso
+                always_use_default_target_path: true
+            access_denied_url: /emp/por/seguridad/accesodenegado
+            logout:
+                path: /emp/por/seguridad/logout
+                target: /emp/por/acceso/registrarsalida
+
+    access_control:
+        #- { path: ^/*,                            roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/emp/adm/seguridad/login,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/emp/por/seguridad/login,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/emp/adm/*,                     roles: ROLE_EMPADM }
+        - { path: ^/emp/por/*,                     roles: ROLE_EMPPOR }

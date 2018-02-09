@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block page_content %}
+  <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>FERIADO<small>Lista de feriados</small></h2>
+                     <div class="title_right">
+                        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                         <a  class="btn btn-success" href="{{path('feriado_new')}}">
+													<i class="glyphicon glyphicon-plus-sign"> NUEVO REGISTRO DE FERIADO</i>
+												</a>
+                        </div>
+                      </div>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+
+                    <div class="table-responsive">
+    <table class="table table-striped jambo_table bulk_action">
+        <thead class="headings">
+            <tr>
+                <th class="column-title">Id</th>
+                <th class="column-title">Titulo</th>
+                <th class="column-title">Fecha</th>
+                <th class="column-title">Tipo</th>
+                <th class="column-title">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for feriado in feriados %}
+            <tr>
+                <td>{{ feriado.id }}</a></td>
+                <td>{{ feriado.titulo }}</td>
+                <td>{% if feriado.fecha %}{{ feriado.fecha|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if feriado.tipo %}<span class="label label-default">Dinamico</span>{% else %}<span class="label label-default">Estatico</span>{% endif %}</td>
+                <td>
+                  <a href="{{ path('feriado_edit', { 'id': feriado.id }) }}" class="btn btn-xs btn-warning">
+                    <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                  </a>
+                  <a href="{{ path('feriado_delete', { 'id': feriado.id }) }}" class="btn btn-xs btn-danger">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </a>
+                
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+{% endblock %}

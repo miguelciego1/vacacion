@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block page_content %}
+    <h1>Feriado</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ feriado.id }}</td>
+            </tr>
+            <tr>
+                <th>Titulo</th>
+                <td>{{ feriado.titulo }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{% if feriado.fecha %}{{ feriado.fecha|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Tipo</th>
+                <td>{% if feriado.tipo %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('feriado_index') }}"><i class="fa fa-undo" aria-hidden="true"></i>Volver</a>
+        </li>
+        <li>
+            <a href="{{ path('feriado_edit', { 'id': feriado.id }) }}">Editar</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Eliminar">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

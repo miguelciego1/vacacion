@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Caja Petrolera de Salud | </title>
+
+
+    <link href="{{ asset('gentelella/vendors/jquery-ui-1.12.1/jquery-ui.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('gentelella/build/css/base.css') }}" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="{{ asset('gentelella/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{{ asset('gentelella/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="{{ asset('gentelella/build/css/custom.min.css') }}" rel="stylesheet">
+  </head>
+<body class="login">
+    <div>
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+            {% if error %}
+            <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+
+            {% endif %}
+            <form action="{{ path('login_check_por') }}" method="post">
+              <h1> Sistema de Vacacion <br>
+                <br>
+              PORTAL </h1>
+              <div>
+                <label for="username">Codigo:</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" />
+              </div>
+              <div>
+                 <label for="password">Contraseña:</label>
+                  <input type="password" id="password" name="_password" />
+
+              </div>
+              <div>
+                <input type="hidden" name="_target_path" value="principal" />
+		            <button type="submit" class="btn btn-lg btn-success btn-block">{{ 'Iniciar Sesion'|trans }}</button>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">No tienes cuenta?
+                  <a href="" class="to_register"> Crear cuenta </a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><img src="{{ asset('logo.png') }}" alt="..." class="logo"> Caja Petrolera de Salud!</h1>
+                  <p>©2017 CPS </p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>

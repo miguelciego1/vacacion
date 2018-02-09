@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <style>
+       table#principal {
+		border-width: 1px;
+		border-style: solid;
+	}
+	td{
+	    font-size:75%;
+	}
+	td#sub{
+            border-bottom: 1px solid #ccc;
+
+	}
+       </style>
+    </head>
+    <body>
+        {% for i in 1..2 %}
+            {% if i ==1%}
+                {% set marca ='ORIGINAL'%}
+            {% else %}
+                {% set marca='COPIA'%}
+            {% endif%}
+            <div>
+                 {% if marca =='COPIA'%}
+                     <br>
+                     {% endif%}
+        <table width=100%>
+            <tr width=100%>
+                <td rowspan="4"><img src="{{ absolute_url(asset('logonegro.png'))}}" alt="" ></td>
+                <th width="10%" align="right"><b>Nº</b></td>
+                <th width="10%" align="right" id="numero"><b>{{permiso.id}}</b></td>
+            </tr>
+            <tr>
+                <td><h2><b>{{marca}}</b></h2></td>
+            </tr>
+        </table>
+        <h3 style="text-align:center">Formulario de solicitud de licencia por {{permiso.tipo|capitalize}}</h3>
+
+        <table width="100%" >
+
+            <tr width="100%">
+                <td colspan="1" id="sub1" width="21%">Nombre y Apellido :</th>
+                <td colspan="5" id="sub">{{empleado}}</td>
+
+            </tr>
+            {#<tr>#}
+            {#    <th>Seccion :</th>#}
+                {#<td>{{empleado.0.seccion}}</td>#}
+            {#    <th>Servicio :</th>#}
+                {#<td>{{empleado.0.servicio}}</td>#}
+            {#</tr>#}
+            <tr width="100%">
+                <td id="sub1">Cargo:</td>
+                <td id="sub" width="29%">{{auxempleado.cargo}}</td>
+                <td id="sub1" width="10%">Servicio :</td>
+                <td id="sub" colspan="3">Por definir</td>
+            </tr>
+
+            <tr>
+                <td id="sub1">Tiempo de salida :</td>
+                <td id="sub">{{permiso.tiempoLicencia}}{% if permiso.tiempoLicencia > 1%} dias{% else %} dia {% endif %}</td>
+                <td id="sub1">Desde :</td>
+                <td id="sub">
+                    {% if permiso.tipo =='HORAS' %}
+                    {{ permiso.fechaInicio|date('H:i:s') }}
+                    {% else%}
+                    {{ permiso.fechaInicio|date('Y-m-d')}}
+                    {% endif %}
+                </td>
+                <td id="sub1">Hasta :</td>
+                <td id="sub">{% if permiso.tipo =='HORAS' %}
+                    {{ permiso.fechaRegreso|date('H:i:s') }}
+                    {% else%}
+                    {{ permiso.fechaRegreso|date('Y-m-d')}}
+                    {% endif %}</td>
+            </tr>
+
+            <tr>
+                <td  id="sub1">Fecha/Hora de retorno:</td>
+                <td id="sub">{{permiso.fechaRegreso|date('d-m-Y')}}</td>
+                <td id="sub1" colspan="1">Tipo :</td>
+                <td colspan="3" id="sub">{{permiso.tipoPermiso}}</td>
+
+            </tr>
+            <tr>
+                <td id="sub1" colspan="1">Motivo :</td>
+                <td colspan="5" id="sub">{{permiso.motivo}}</td>
+
+            </tr>
+
+        </table>
+         <p align="center">Santa Cruz, {{permiso.fechaSolicitud|date('d')}} de {{permiso.fechaSolicitud|date('m')}} de {{permiso.fechaSolicitud|date('Y')}}</p>
+         <br>
+         <br>
+         <br>
+         <table width="100%">
+             <tr>
+                 <td width="30%" align="center"><hr width="90%">INTERESADO</hr></td>
+                 <td width="30%" align="center"><hr width="90%">JEFE DE SERVICIO</hr></td>
+                 <td width="30%" align="center"><hr width="90%">.</hr></td>
+             </tr>
+         </table>
+         <br>
+         <br>
+         {% if marca =='ORIGINAL'%}
+         <hr>
+         {% endif%}
+
+       </div>
+        {% endfor %}
+
+    </body>
+</html>

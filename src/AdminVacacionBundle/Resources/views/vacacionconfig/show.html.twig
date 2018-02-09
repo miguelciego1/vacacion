@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block page_content %}
+    <h1>Vacacionconfig</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ vacacionConfig.id }}</td>
+            </tr>
+            <tr>
+                <th>Gestion</th>
+                <td>{{ vacacionConfig.gestion }}</td>
+            </tr>
+            <tr>
+                <th>Dias</th>
+                <td>{{ vacacionConfig.dias }}</td>
+            </tr>
+            <tr>
+                <th>Permiso</th>
+                <td>{{ vacacionConfig.permiso }}</td>
+            </tr>
+            <tr>
+                <th>Creadoel</th>
+                <td>{% if vacacionConfig.creadoEl %}{{ vacacionConfig.creadoEl|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('vacacionconfig_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('vacacionconfig_edit', { 'id': vacacionConfig.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

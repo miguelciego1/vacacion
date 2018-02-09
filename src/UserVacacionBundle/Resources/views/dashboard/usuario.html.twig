@@ -1,0 +1,44 @@
+<!-- top tiles -->
+          <div class="row tile_count">
+            <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> GESTIONES</span>
+              <div class="count">  {{ vacacionGestiones|length}}</div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i></i> N° de Gestiones disponibles</span>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-clock-o"></i> DIAS</span>
+              <div class="count">
+                  {% set diasGestion=0%}
+                  {% for vacacionGestion in vacacionGestiones%}
+                      {% set diasGestion = diasGestion + vacacionGestion.dias %}
+                      {% set diasGestion = diasGestion - vacacionGestion.tomados%}
+                  {% endfor%}
+                  
+                  {{ diasGestion }}
+              </div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i></i> N° de Dias disponibles</span>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Permisos</span>
+              <div class="count red">
+                {% set diasPermiso=0%}
+                  {% for permiso in permisos%}
+                      {% set diasPermiso = diasPermiso + permiso.tiempoLicencia %}
+                  {% endfor%}
+                  
+                  {{ diasPermiso + diasH}}
+                  
+              </div>
+              <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i></i>N° de dias de permisos</span>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total dias</span>
+              <div class="count green">
+                {% set totalPermiso = diasPermiso + diasH %}
+                
+                {{ diasGestion - totalPermiso }}
+              </div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i></i>N° Total dias disponibles</span>
+            
+          </div>
+          <!-- /top tiles -->

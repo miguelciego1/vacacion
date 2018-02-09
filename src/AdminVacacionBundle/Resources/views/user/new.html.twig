@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Caja Petrolera de Salud | </title>
+
+
+    <link href="{{ asset('gentelella/vendors/jquery-ui-1.12.1/jquery-ui.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('gentelella/build/css/base.css') }}" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="{{ asset('gentelella/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{{ asset('gentelella/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="{{ asset('gentelella/build/css/custom.min.css') }}" rel="stylesheet">
+  </head>
+<body class="login">
+    <div>
+     {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="alert alert-danger" role="alert">
+                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                  <span class="sr-only">Error:</span>
+                  {{ flashMessage }}
+                </div>
+
+            {% endfor %}
+      <div class="login_wrapper">
+
+        <div class="animate form login_form">
+          <section class="login_content">
+            {{ form_start(form) }}
+              <h1>Crear Cuenta </h1>
+              {{ form_widget(form) }}
+              <input class="btn btn-default submit" type="submit" value="Crear" />
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">Ya creaste tu cuenta?
+                  <a href="{{path('login')}}" class="to_register">INICIAR SESSION</a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><img src="{{ asset('logo.png') }}" alt="..." class="logo"> Caja Petrolera de Salud!</h1>
+                  <p>©2017 CPS </p>
+                </div>
+              </div>
+            {{ form_end(form) }}
+          </section>
+        </div>
+      </div>
+    </div>
+
+                            <!-- jQuery -->
+            			    <script src="{{ asset('gentelella/vendors/jquery/dist/jquery.min.js') }}"></script>
+            			    <!-- jquery ui -->
+            			    <script src="{{ asset('gentelella/vendors/jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
+            			    <script src="{{ asset('gentelella/vendors/jQuery-Timepicker-Addon-master/dist/jquery-ui-timepicker-addon.js') }}"></script>
+            			    <!-- Bootstrap -->
+            			    <script src="{{ asset('gentelella/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+            			    <!-- FastClick -->
+            			    <script src="{{ asset('gentelella/vendors/fastclick/lib/fastclick.js') }}"></script>
+            			    <!-- NProgress -->
+            			    <script src="{{ asset('gentelella/vendors/nprogress/nprogress.js') }}"></script>
+
+
+                    		<!-- Custom Theme Scripts -->
+                    		<script src="{{ asset('gentelella/build/js/custom.min.js') }}"></script>
+
+                            {{ form_javascript(form) }}
+
+
+
+  </body>
+</html>

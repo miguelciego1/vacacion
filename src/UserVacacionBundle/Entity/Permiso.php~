@@ -1,0 +1,462 @@
+<?php
+
+namespace UserVacacionBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Permiso
+ *
+ * @ORM\Table(name="permiso")
+ * @ORM\Entity(repositoryClass="UserVacacionBundle\Repository\PermisoRepository")
+ * @ORM\HasLifecycleCallbacks()
+ */
+class Permiso
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_solicitud", type="datetime")
+     *
+     */
+    private $fechaSolicitud;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_regreso", type="datetime")
+     */
+    private $fechaRegreso;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="fecha_inicio", type="datetime")
+     */
+    private $fechaInicio;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_fin", type="datetime")
+     */
+    private $fechaFin;
+
+    /**
+     * @var int
+     *
+     * @Assert\NotBlank()
+     * @Assert\GreaterThan(0)
+     * @ORM\Column(name="tiempo_licencia", type="integer")
+     */
+    private $tiempoLicencia;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo", type="string", length=6, columnDefinition="ENUM('HORAS','DIAS')")
+     */
+    private $tipo;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="estado", type="integer")
+     */
+    private $estado;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @ORM\Column(name="motivo", type="string", length=50)
+     */
+    private $motivo;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="creado_el", type="datetime")
+     */
+    private $creadoEl;
+
+   /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="modificado_el", type="datetime")
+     */
+    private $modificadoEl;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Cps\Personal\ArchivoBundle\Entity\Empleado")
+     * @ORM\JoinColumn(name="empleado_id", referencedColumnName="id")
+     *
+     */
+    private $empleado;
+    /**
+     * @var \CPS\VacacionBundle\Entity\VacacionCabecera
+     *
+     * @ORM\ManyToOne(targetEntity="UserVacacionBundle\Entity\VacacionCabecera")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="vacacion_cabecera_id", referencedColumnName="id", nullable=true)
+     * })
+     */
+    private $vacacionCabecera;
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="AdminVacacionBundle\Entity\TipoPermiso")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tipo_permiso_id", referencedColumnName="id")
+     * })
+     * @Assert\NotBlank()
+     */
+     private $tipoPermiso;
+
+     /**
+      * Many VacacionCabecera have One Empleado.
+      * @ORM\ManyToOne(targetEntity="Cps\Administracion\AdministracionBundle\Entity\Centrocosto")
+      * @ORM\JoinColumn(name="cen_costo", referencedColumnName="id")
+      */
+     private $centroCostos;
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set fechaSolicitud
+     *
+     * @param \DateTime $fechaSolicitud
+     * @return Permiso
+     */
+    public function setFechaSolicitud($fechaSolicitud=null)
+    {
+        if (is_string($fechaSolicitud)) {
+          $this->fechaSolicitud= new \DateTime($fechaSolicitud);
+        }else{
+          $this->fechaSolicitud= $fechaSolicitud;
+        }
+
+
+        return $this;
+    }
+
+    /**
+     * Get fechaSolicitud
+     *
+     * @return \DateTime
+     */
+    public function getFechaSolicitud()
+    {
+        return $this->fechaSolicitud;
+    }
+
+    /**
+     * Set fechaRegreso
+     *
+     * @param \DateTime $fechaRegreso
+     * @return Permiso
+     */
+    public function setFechaRegreso($fechaRegreso)
+    {
+        if(is_string($fechaRegreso)){
+          $fechaRegreso= new \DateTime($fechaRegreso);
+        }
+
+        $this->fechaRegreso = $fechaRegreso;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaRegreso
+     *
+     * @return \DateTime
+     */
+    public function getFechaRegreso()
+    {
+        return $this->fechaRegreso;
+    }
+
+    /**
+     * Set fechaInicio
+     *
+     * @param \DateTime $fechaInicio
+     * @return Permiso
+     */
+    public function setFechaInicio($fechaInicio)
+    {
+      if(is_string($fechaInicio)){
+        $fechaInicio= new \DateTime($fechaInicio);
+      }
+      $this->fechaInicio = $fechaInicio;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaInicio
+     *
+     * @return \DateTime
+     */
+    public function getFechaInicio()
+    {
+        return $this->fechaInicio;
+    }
+
+    /**
+     * Set fechaFin
+     *
+     * @param \DateTime $fechaFin
+     * @return Permiso
+     */
+    public function setFechaFin($fechaFin)
+    {
+      if(is_string($fechaFin)){
+        $fechaFin= new \DateTime($fechaFin);
+      }
+
+      $this->fechaFin = $fechaFin;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaFin
+     *
+     * @return \DateTime
+     */
+    public function getFechaFin()
+    {
+        return $this->fechaFin;
+    }
+
+    /**
+     * Set tiempoLicencia
+     *
+     * @param integer $tiempoLicencia
+     * @return Permiso
+     */
+    public function setTiempoLicencia($tiempoLicencia)
+    {
+        $this->tiempoLicencia = $tiempoLicencia;
+
+        return $this;
+    }
+
+    /**
+     * Get tiempoLicencia
+     *
+     * @return integer
+     */
+    public function getTiempoLicencia()
+    {
+        return $this->tiempoLicencia;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param string $tipo
+     * @return Permiso
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set estado
+     *
+     * @param integer $estado
+     * @return Permiso
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return integer
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
+     * Set motivo
+     *
+     * @param string $motivo
+     * @return Permiso
+     */
+    public function setMotivo($motivo)
+    {
+        $this->motivo = $motivo;
+
+        return $this;
+    }
+
+    /**
+     * Get motivo
+     *
+     * @return string
+     */
+    public function getMotivo()
+    {
+        return $this->motivo;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreadoEl()
+    {
+        $this->creadoEl = new \DateTime();
+
+        return $this;
+    }
+
+    /**
+     * Get creadoEl
+     *
+     * @return \DateTime
+     */
+    public function getCreadoEl()
+    {
+        return $this->creadoEl;
+    }
+    /**
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     */
+    public function setModificadoEl()
+    {
+        $this->modificadoEl = new \DateTime();
+
+        return $this;
+    }
+
+    /**
+     * Get modificadoEl
+     *
+     * @return \DateTime
+     */
+    public function getModificadoEl()
+    {
+        return $this->modificadoEl;
+    }
+
+    /**
+     * Set empleado
+     *
+     * @param \Cps\Personal\ArchivoBundle\Entity\Empleado $empleado
+     * @return Permiso
+     */
+    public function setEmpleado(\Cps\Personal\ArchivoBundle\Entity\Empleado $empleado = null)
+    {
+        $this->empleado = $empleado;
+
+        return $this;
+    }
+
+    /**
+     * Get empleado
+     *
+     * @return \Cps\Personal\ArchivoBundle\Entity\Empleado
+     */
+    public function getEmpleado()
+    {
+        return $this->empleado;
+    }
+
+    /**
+     * Set tipoPermiso
+     *
+     * @param \UserVacacionBundle\Entity\TipoPermiso $tipoPermiso
+     * @return Permiso
+     */
+    public function setTipoPermiso(\AdminVacacionBundle\Entity\TipoPermiso $tipoPermiso = null)
+    {
+        $this->tipoPermiso = $tipoPermiso;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoPermiso
+     *
+     * @return \AdminVacacionBundle\Entity\TipoPermiso
+     */
+    public function getTipoPermiso()
+    {
+        return $this->tipoPermiso;
+    }
+
+
+    /**
+     * Set vacacionCabecera
+     *
+     * @param \UserVacacionBundle\Entity\VacacionCabecera $vacacionCabecera
+     * @return Permiso
+     */
+    public function setVacacionCabecera(\UserVacacionBundle\Entity\VacacionCabecera $vacacionCabecera = null)
+    {
+        $this->vacacionCabecera = $vacacionCabecera;
+
+        return $this;
+    }
+
+    /**
+     * Get vacacionCabecera
+     *
+     * @return \UserVacacionBundle\Entity\VacacionCabecera
+     */
+    public function getVacacionCabecera()
+    {
+        return $this->vacacionCabecera;
+    }
+
+    public function validar()
+    {
+      $res=false;
+      if($this->tiempoLicencia<=$this->tipoPermiso->getCantidadDias() && $this->tipoPermiso->getId()!= 4){
+        $res=true;
+      }
+
+      return $res;
+    }
+
+}

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Vacacioncabeceras list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fechasolcitud</th>
+                <th>Gestion</th>
+                <th>Fechainicio</th>
+                <th>Fechafin</th>
+                <th>Fecharegreso</th>
+                <th>Estado</th>
+                <th>Totaldias</th>
+                <th>Creadoel</th>
+                <th>Modificadoel</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vacacionCabecera in vacacionCabeceras %}
+            <tr>
+                <td><a href="{{ path('vacacioncabecera_show', { 'id': vacacionCabecera.id }) }}">{{ vacacionCabecera.id }}</a></td>
+                <td>{% if vacacionCabecera.fechaSolcitud %}{{ vacacionCabecera.fechaSolcitud|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ vacacionCabecera.gestion }}</td>
+                <td>{% if vacacionCabecera.fechaInicio %}{{ vacacionCabecera.fechaInicio|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if vacacionCabecera.fechaFin %}{{ vacacionCabecera.fechaFin|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if vacacionCabecera.fechaRegreso %}{{ vacacionCabecera.fechaRegreso|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ vacacionCabecera.estado }}</td>
+                <td>{{ vacacionCabecera.totalDias }}</td>
+                <td>{% if vacacionCabecera.creadoEl %}{{ vacacionCabecera.creadoEl|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if vacacionCabecera.modificadoEl %}{{ vacacionCabecera.modificadoEl|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('vacacioncabecera_show', { 'id': vacacionCabecera.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('vacacioncabecera_edit', { 'id': vacacionCabecera.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('vacacioncabecera_new') }}">Create a new vacacionCabecera</a>
+        </li>
+    </ul>
+{% endblock %}

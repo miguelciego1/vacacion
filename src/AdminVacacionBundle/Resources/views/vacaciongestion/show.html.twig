@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block page_content %}
+    <h1>VacacionGestion</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ vacacionGestion.id }}</td>
+            </tr>
+            <tr>
+                <th>Empleado</th>
+                <td>{{ vacacionGestion.empleado}}</td>
+            </tr>
+            <tr>
+                <th>Gestion</th>
+                <td>{{ vacacionGestion.gestion }}</td>
+            </tr>
+            <tr>
+                <th>Dias</th>
+                <td>{{ vacacionGestion.dias }}</td>
+            </tr>
+            <tr>
+                <th>Tomados</th>
+                <td>{{ vacacionGestion.tomados }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ vacacionGestion.estado }}</td>
+            </tr>
+            <tr>
+                <th>Creadoel</th>
+                <td>{% if vacacionGestion.creadoEl %}{{ vacacionGestion.creadoEl|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Modificadoel</th>
+                <td>{% if vacacionGestion.modificadoEl %}{{ vacacionGestion.modificadoEl|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('vacaciongestion_index') }}" class="btn btn-default">Volver al Listado</a>
+        </li>
+        <li>
+            <a href="{{ path('vacaciongestion_edit', { 'id': vacacionGestion.id }) }}" class="btn btn-default">Editar</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" class="btn btn-default" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends 'base.html.twig' %}
+
+{% block page_content %}
+
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Listado <small>Registro de Vacacion</small></h2>
+                    <div class="title_right">
+                       <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                        <!-- <a  class="btn btn-success" href="{{path('vacacioncabecera_new_admin')}}">
+                        <i class="glyphicon glyphicon-plus-sign"> NUEVA SOLICITUD DE VACACION</i>
+                      </a> -->
+                      <!-- Small modal -->
+                      <button type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-sm"><i class="glyphicon glyphicon-plus-sign"> NUEVA SOLICITUD DE VACACION</i></button>
+
+                      <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                          <div class="modal-content">
+
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                              </button>
+                              <h4 class="modal-title" id="myModalLabel2">VERIFICACION DE REGISTROS</h4>
+                            </div>
+                            <div class="modal-body">
+                              <h4>GESTION</h4>
+                              <p>¿Verificó las gestiones que le corresponde y los dias disponibles
+                                del empleado?</p>
+                              <h4>PERMISO</h4>
+                              <p>¿Verificó los permisos que se descontaran al empleado?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <a  class="btn btn-danger" data-dismiss="modal"><i class="fa fa-thumbs-down"> </i> NO</a>
+                              <a href="{{path('vacacioncabecera_new_admin')}}" class="btn btn-success"><i class="fa fa-thumbs-up"> </i> SI</a>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                      <!-- /modals -->
+                       </div>
+                     </div>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+                    <div class="well" style="overflow: auto">
+                        {{form_start(formBuscar, {'attr': {'class': 'form-horizontal'}})}}
+
+
+                        <div class="control-group">
+                          <table width=100% >
+                            <tbody>
+                              <tr>
+                                <td width=70%>{{form_row(formBuscar.empleado)}}</td>
+                                <td align="right">{{form_row(formBuscar.buscar)}}</td>
+                                <td align="center">{{form_row(formBuscar.todos)}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+                      {{form_end(formBuscar)}}
+
+                    </div>
+                    <div class="table-responsive">
+                      <b>Cod. Empleado: {{app.session.get('buscarE')}}</b>
+
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr class="headings">
+                              <th class="column-title">Opciones</th>
+                            <th class="column-title">{{knp_pagination_sortable(vacacionCabeceras,'Nº','v.id')}}</th>
+                            <th class="column-title">Cod. Empleado</th>
+                            <th class="column-title">{{knp_pagination_sortable(vacacionCabeceras,'Fecha de Inicio','v.fechaInicio')}} </th>
+                            <th class="column-title">{{knp_pagination_sortable(vacacionCabeceras,'Fecha Fin','v.fechaFin')}} </th>
+                            <th class="column-title">{{knp_pagination_sortable(vacacionCabeceras,'Fecha de Regreso','v.fechaRegreso')}} </th>
+                            <th class="column-title">{{knp_pagination_sortable(vacacionCabeceras,'Estado ','v.estado')}}</th>
+                            <th class="column-title">{{knp_pagination_sortable(vacacionCabeceras,'Total de dias','v.totalDias')}} </th>
+                            <th class="column-title">Tipo de Vacacion</th>
+
+
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          {% for vacacionCabecera in vacacionCabeceras %}
+                                <tr>
+                                    <td >
+                                        <li class="btn-group">
+                                            <a href="javascript:;" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cog" aria-hidden="true"></i>
+                                                <span class=" fa fa-angle-down"></span>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                {% if vacacionCabecera.id > 15341 %}
+                                                    <li><a href="{{path('vacacioncabecera_show_admin',{'id':vacacionCabecera.id})}}" class="btn btn-xs btn-info">
+                                                            <i class="fa fa-eye fa-2" aria-hidden="true"></i><span> Mostrar</span>
+                                                        </a></li>
+                                                {% endif %}
+                                                <li><a target="_blank" href="{{path('vacacioncabecera_excel_admin',{'id':vacacionCabecera.id})}}" class="btn btn-xs btn-default">
+                                                        <i class="fa fa-print fa-2" aria-hidden="true"></i> <span> Imprimir</span>
+                                                    </a></li>
+                                                {% if vacacionCabecera.estado == 1 %}
+                                                    <li><a href="{{path('vacacioncabecera_confirm',{'id':vacacionCabecera.id})}}" class="btn btn-xs btn-success">
+                                                            <i class="fa fa-check-square fa-2" aria-hidden="true"></i><span> Confirmar</span>
+
+                                                        </a></li>
+                                                    <li><a href="{{path('vacacion_cabecera_edit',{'id':vacacionCabecera.id})}}" class="btn btn-xs btn-warning">
+                                                            <i class="ace-icon fa fa-pencil-square-o bigger-120 fa-2"></i>  <span>Editar</span>
+
+                                                        </a></li>
+
+
+                                                    <li><a href="{{path('vacacioncabecera_delete_admin_solicitud',{'id':vacacionCabecera.id})}}" class="btn btn-xs btn-danger">
+                                                            <i class="fa fa-trash fa-2" aria-hidden="true"></i><span> Eliminar</span>
+                                                        </a></li>
+
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+
+                                    </td>
+                                    <td>{% if vacacionCabecera.id > 15341 %}<span class="label label-default arrowed-in-right arrowed">{{vacacionCabecera.id}}</span>{% else %}{{ vacacionCabecera.id }}{% endif %}</td>
+                                    <td>{{vacacionCabecera.empleado.id}}</td>
+                                    <td>{% if vacacionCabecera.fechaInicio %}{{ vacacionCabecera.fechaInicio|date('Y-m-d') }}{% endif %}</td>
+                                    <td>{% if vacacionCabecera.fechaFin %}{{ vacacionCabecera.fechaFin|date('Y-m-d') }}{% endif %}</td>
+                                    <td>{% if vacacionCabecera.fechaRegreso %}{{ vacacionCabecera.fechaRegreso|date('Y-m-d') }}{% endif %}</td>
+                                    <td>{%if vacacionCabecera.estado==1 %}
+                            								<span class="label label-primary arrowed-in-right arrowed">Solicitado</span>
+                            							{% elseif vacacionCabecera.estado==2%}
+                            								<span class="label label-success arrowed">Aprobado</span>
+                            							{% elseif  vacacionCabecera.estado==3%}
+                            								<span class="label label-info">Historico</span>
+                            							{% elseif vacacionCabecera.anulado %}
+                            								<span class="label label-danger arrowed-in">Anulado</span>
+                            							{% endif%}</td>
+
+                                    <td>{{ vacacionCabecera.totalDias }}</td>
+                                    <td>{% if vacacionCabecera.tipo=='R' %}
+                                            <span class="label label-primary arrowed-in-right arrowed">RADIACION</span>
+                                          {% elseif vacacionCabecera.tipo=='N'%}
+                                            <span class="label label-info">NORMAL</span>
+                                          {% endif %}</td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                      </table>
+
+                      <div class="navigation">
+                     {{ knp_pagination_render(vacacionCabeceras) }}
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+{% endblock %}
+{% block javascripts %}
+			    {{ form_javascript(formBuscar) }}
+{% endblock javascripts %}

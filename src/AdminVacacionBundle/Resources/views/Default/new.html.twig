@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block page_content %}
+    <div class="row">
+              <div class="col-md-5 col-md-offset-3 col-sm-5 col-sm-offset-3 col-xs-5 col-xs-offset-3">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Utilitario<small>Calcular Fecha Fin</small></h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                  <div class="form_error"></div>
+                  <form method="POST" class="ajaxForm" action="{{path('calcular_fecha')}}" {{ form_enctype(form) }}>
+                      <div id="form_body">
+                          {% include 'AdminVacacionBundle:Default:form.html.twig' with {'form': form} %}
+                      </div>
+
+                      <button type="submit" class="btn btn-success">Calcular</button>
+                      {{form_rest(form)}}
+                  </form>
+                   </div>
+
+                   {% if is_granted('ROLE_A') %}
+                   <a href="{{ asset('doc.pdf') }}" target="_blank" rel="stylesheet">documentacion vacacion</a> <br>
+                   {% else %}
+                   <a href="{{ asset('docU.pdf') }}" target="_blank" rel="stylesheet">documentacion vacacion</a> <br>
+                   {% endif %}
+            </div>
+          </div>
+        </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        initAjaxForm();
+    </script>
+{% endblock %}

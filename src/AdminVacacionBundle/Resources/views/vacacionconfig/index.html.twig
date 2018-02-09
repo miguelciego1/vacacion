@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Listado
+                        <small>Registro de Configuracion de Vacacion</small>
+                    </h2>
+                    <!-- ----------------------------------------------- -->
+
+                    <div class="title_right">
+                        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                            <a class="btn btn-success" href="{{ path('vacacionconfig_new') }}">
+                                <i class="glyphicon glyphicon-plus-sign"> NUEVO REGISTRO</i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- ------------------------------------ -->
+
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <div class="well" style="overflow: auto">
+                        {{ form_start(formBuscar, {'attr': {'class': 'form-horizontal'}}) }}
+
+
+                        <div class="control-group">
+                            <table width=100%>
+                                <tbody>
+                                <tr>
+                                    <td width=70%>{{ form_row(formBuscar.empleado) }}</td>
+                                    <td align="right">{{ form_row(formBuscar.buscar) }}</td>
+                                    <td align="center">{{ form_row(formBuscar.todos) }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        {{ form_end(formBuscar) }}
+
+                    </div>
+                    <div class="table-responsive">
+
+                        <b>Cod. Empleado :{{ app.session.get('buscarE') }}</b>
+                        <table class="table table-striped jambo_table bulk_action">
+                            <thead>
+                            <tr class="headings">
+                                <th class="column-title">Opcion</th>
+                                <th class="column-title">Cod. Empleado</th>
+                                <th class="column-title">Empleado</th>
+                                <th class="column-title">Gestion</th>
+                                <th class="column-title">Dias</th>
+                                <th class="column-title">N°Permiso</th>
+
+
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for vacacionConfig in vacacionConfigs %}
+                                <tr>
+                                    <td>
+                                        <li class="btn-group">
+                                            <a href="javascript:;" class="dropdown-toggle btn btn-default"
+                                               data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cog"
+                                                                                               aria-hidden="true"></i>
+                                                <span class=" fa fa-angle-down"></span>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="{{ path('vacacionconfig_actuaalizar', { 'id': vacacionConfig.id }) }}"
+                                                       class="btn btn-default"><i class="fa fa-refresh"
+                                                                                  aria-hidden="true"></i> <span>Actualizar</span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ path('vacacionconfig_edit', { 'id': vacacionConfig.id }) }}"
+                                                       class="btn btn-warning"><i class="fa fa-pencil-square-o"
+                                                                                  aria-hidden="true"></i> <span>Editar</span></a>
+
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </td>
+                                    <td>{{ vacacionConfig.empleado.id }}</td>
+                                    <td>{{ vacacionConfig.empleado }}</td>
+                                    <td>{{ vacacionConfig.gestion }}</td>
+                                    <td>{{ vacacionConfig.dias }}</td>
+                                    <td>{{ vacacionConfig.permiso }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="navigation">
+                            {{ knp_pagination_render(vacacionConfigs) }}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

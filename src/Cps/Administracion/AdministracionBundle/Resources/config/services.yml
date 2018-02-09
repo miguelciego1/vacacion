@@ -1,0 +1,4 @@
+services:
+#    cps_administracion.example:
+#        class: Cps\Administracion\AdministracionBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

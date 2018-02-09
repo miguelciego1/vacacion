@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <style>
+      body{
+      border-width: 1px;
+      border-style: solid;
+      }
+      table#logo{
+      padding:50px;
+      }
+      td{
+      font-size:100%;
+      }
+      td#sub{
+           border-bottom: 1px solid #ccc;
+
+      }
+      </style>
+    </head>
+    <body >
+
+        <table width=95% align="center" id="logo">
+            <tr widtd=90%>
+                <td style="padding-top:10px;"><img src="{{ absolute_url(asset('logonegro.png'))}}" alt="" ></td>
+                <td widtd="10%" align="right"><h4><b>Nº</b></h4></td>
+                <td widtd="10%" align="right" id="numero"><h4><b>{{vacacionCabecera.id}}</b></h4></td>
+            </tr>
+        </table>
+        <h4 style="text-align:center" widtd="10%"><b>Solicitud de Vacacion o <br> Licencia a cuenta de Vacacion</b></h4>
+        <table align="center" width="95%" cellpadding="7">
+            <tr>
+                <td width="22%">Nombre y Apellido :</td>
+                <td id="sub" colspan="3">{{vacacionCabecera.empleado}}</td>
+            </tr>
+
+            <tr>
+                <td>Sucursal :</td>
+                <td id="sub">{{centroCostos.sucursal|capitalize}}</td>
+                <td width="15%">Servicio :</td>
+                <td id="sub">{{centroCostos.servicio|capitalize}}</td>
+            </tr>
+
+            <tr>
+                <td>Cargo :</td>
+                <td id="sub">{{auxEmpleado.cargo|capitalize}}</td>
+                <td width="15%" >Sale a partir:</td>
+                <td id="sub" >{{vacacionCabecera.fechaInicio|date('d-m-Y')}}</td>
+            </tr>
+
+            <tr>
+                <td>Por la gestion :</td>
+                <td id="sub" colspan="3">{%for vacacionDetalle in vacacionDetalles%}
+                         {{vacacionDetalle.vacacionGestion.gestion}}
+                     {%endfor%}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td  align="right" id="sub">Santa Cruz, {{vacacionCabecera.fechaSolcitud|date('d')}} de {{vacacionCabecera.fechaSolcitud|date('m')}} de {{vacacionCabecera.fechaSolcitud|date('Y')}}</td>
+            </tr>
+
+        </table >
+        <br>
+         <br>
+        <table width="100%" cellpadding="10">
+             <tr>
+                 <td width="30%" align="center" height="60px"><hr width="90%" size="0">INTERESADO</hr></td>
+                 <td width="30%" align="center" height="60px"><hr width="90%" size="0">JEFE DE SERVICIO</hr></td>
+             </tr>
+             <tr>
+                  <td width="30%" align="center"><hr width="90%" >ADMINISTRACION REGIONAL</hr></td>
+                   <td width="30%" align="center"><hr width="90%">.</hr></td>
+             </tr>
+         </table>
+
+        <h4 style="text-align:center"><b>VERIFICACION</b></h4>
+        <table width="95%" align="center">
+            <tr>
+                <td>En atencion a la solicitud que antecede y revisada la carpeta Regional Personal del interesado que cursa en archivo , le correponde hacer use de la(s)
+                     vacacion(es), de acuerdo al siguiente detalle:</td>
+            </tr>
+        </table>
+        <br>
+        <table width="95%" align="center">
+             <tr>
+                 <td><b>Fecha de Ingreso :</b></td>
+                 <td>{{auxEmpleado.ingresoEl|date('d-m-Y')}}</td>
+             </tr>
+        </table>
+<br>
+        <table width="95%" align="center" >
+          {% if vacacionDetalles|length ==1 %}
+              {%set count =2 %}
+              {% elseif vacacionDetalles|length ==2 %}
+              {% set count=1 %}
+              {% else %}
+              {% set count=0 %}
+          {% endif %}
+            {% set total = 0 %}
+             {% for vacacionDetalle in vacacionDetalles %}
+             <tr>
+                 <td></td>
+                 <td id="sub" align="center">{{vacacionDetalle.dias}}</td>
+                 <td align="center" width="25%">dias por la gestion: </td>
+                 <td id="sub" align="center">{{vacacionDetalle.vacacionGestion.gestion}}</td>
+                 {% set total = total + vacacionDetalle.dias %}
+             </tr>
+             {% endfor %}
+
+             {% for i in 0..count%}
+                 {% if i != 0%}
+                 <tr>
+                         <td></td>
+                         <td id="sub" align="center">-</td>
+                         <td align="center" width="25%">dias por la gestion: </td>
+                         <td id="sub" align="center">-</td>
+                         </tr>
+                 {%endif%}
+             {% endfor%}
+             <tr>
+                 <td><b>TOTAL:</b></td>
+                 <td id="sub" align="center">{{total}}</td>
+             </tr>
+             <tr>
+                 <td height="50"><b>MENOS:</b></td>
+             </tr>
+             <tr>
+                 <td>Licencia a Cta.</td>
+                 <td id="sub" align="center">{{totalDiasPermiso}}</td>
+             </tr>
+         </table>
+         <h3 style="text-align:center"><b>AUTORIZACION</b></h3>
+
+         <table width="95%" align="center">
+            <tr>
+                <td>La presente vacacion corresponde a la(s) vacacion(es){%for vacacionDetalle in vacacionDetalles%} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{vacacionDetalle.vacacionGestion.gestion}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             {% endfor %} y se le autoriza hacer uso de este beneficio a partir &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{vacacionCabecera.fechaInicio|date('d-m-Y')}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hasta el&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{vacacionCabecera.fechaFin|date('d-m-Y')}}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;de retornar a sus labores habituales a partir del &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{vacacionCabecera.fechaRegreso|date('d-m-Y')}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+            </tr>
+
+            <tr>
+              <td  align="right" width="40%">Santa Cruz, {{vacacionCabecera.fechaSolcitud|date('d')}} de {{vacacionCabecera.fechaSolcitud|date('m')}} de {{vacacionCabecera.fechaSolcitud|date('Y')}}</td>
+            </tr>
+
+        </table>
+
+        <br>
+        <br>
+        <br>
+        <table width="95%" align="center">
+           <tr>
+               <td width="30%" align="right"><hr align="right" width="50%" size="0"><b>Jefe Departamental de Recursos Humanos</b></hr></td>
+           </tr>
+       </table>
+       <table width="95%" align="center">
+          <tr>
+              <td ><b>Nota:</b><i>El uso de la vacacion fenece impostergablemente en la fecha señalada . Cualquier prórroga será sancionada con la falta
+              a aplicacion al  Art. 101 de Reglamento Interno de Personal</i></td>
+          </tr>
+      </table>
+    </body>
+</html>

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Vacacioncabecera</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ vacacionCabecera.id }}</td>
+            </tr>
+            <tr>
+                <th>Fechasolcitud</th>
+                <td>{% if vacacionCabecera.fechaSolcitud %}{{ vacacionCabecera.fechaSolcitud|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Gestion</th>
+                <td>{{ vacacionCabecera.gestion }}</td>
+            </tr>
+            <tr>
+                <th>Fechainicio</th>
+                <td>{% if vacacionCabecera.fechaInicio %}{{ vacacionCabecera.fechaInicio|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fechafin</th>
+                <td>{% if vacacionCabecera.fechaFin %}{{ vacacionCabecera.fechaFin|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fecharegreso</th>
+                <td>{% if vacacionCabecera.fechaRegreso %}{{ vacacionCabecera.fechaRegreso|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ vacacionCabecera.estado }}</td>
+            </tr>
+            <tr>
+                <th>Totaldias</th>
+                <td>{{ vacacionCabecera.totalDias }}</td>
+            </tr>
+            <tr>
+                <th>Creadoel</th>
+                <td>{% if vacacionCabecera.creadoEl %}{{ vacacionCabecera.creadoEl|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Modificadoel</th>
+                <td>{% if vacacionCabecera.modificadoEl %}{{ vacacionCabecera.modificadoEl|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('vacacioncabecera_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('vacacioncabecera_edit', { 'id': vacacionCabecera.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

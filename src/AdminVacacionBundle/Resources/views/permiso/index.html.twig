@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheet %}}
+    <style>
+        a {
+            color: #E0E0E0;
+        }
+    </style>
+{% endblock %}
+{% block page_content %}
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Listado
+                        <small>Registro de Permiso</small>
+                    </h2>
+                    <!-- ----------------------------------------------- -->
+
+                    <div class="title_right">
+                        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+
+                        </div>
+                    </div>
+                    <!-- ------------------------------------ -->
+
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <div class="well" style="overflow: auto">
+                        {{ form_start(formBuscar, {'attr': {'class': 'form-horizontal'}}) }}
+
+
+                        <div class="control-group">
+                            <table width=100%>
+                                <tbody>
+                                <tr>
+                                    <td width=70%>{{ form_row(formBuscar.empleado) }}</td>
+                                    <td align="right">{{ form_row(formBuscar.buscar) }}</td>
+                                    <td align="center">{{ form_row(formBuscar.todos) }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        {{ form_end(formBuscar) }}
+
+                    </div>
+                    <div class="table-responsive">
+
+                        <b>Cod. Empleado :{{ app.session.get('buscarE') }}</b>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr class="headings">
+                                {#<th class="column-title">Opciones</th>#}
+                                <th class="column-title">{{ knp_pagination_sortable(permisos,'Nº','p.id') }}</th>
+                                <th class="column-title">Cod. Empleado</th>
+                                <th class="column-title">{{ knp_pagination_sortable(permisos,'Fecha de Inicio','p.fechaInicio') }}</th>
+                                <th class="column-title">{{ knp_pagination_sortable(permisos,'Fecha Fin','p.fechaFin') }}</th>
+                                <th class="column-title">{{ knp_pagination_sortable(permisos,'Fecha de Regreso','p.fechaRegreso') }}</th>
+                                <th class="column-title">{{ knp_pagination_sortable(permisos,'Descontado','p.descontado') }}</th>
+                                <th class="column-title">{{ knp_pagination_sortable(permisos,'Tiempo','p.tiempoLicencia') }}</th>
+                                <th class="column-title">{{ knp_pagination_sortable(permisos,'Unidad','p.tipo') }}</th>
+
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for permiso in permisos %}
+                                <tr>
+                                    <!--<td>
+                                        {#{% if empleado == false %}
+                                            {% if permiso.descontado %}
+                                                <a href="{{ path('permiso_edit_admin',{'id':permiso.id}) }}"
+                                                   class="btn btn-default">
+                                                    <i class="fa fa-retweet" aria-hidden="true"></i>
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ path('permiso_edit_admin',{'id':permiso.id}) }}"
+                                                   class="btn btn-default">
+                                                    <i class="fa fa-retweet" aria-hidden="true"></i>
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}#}
+
+
+                                    </td>-->
+                                    <td>{{ permiso.id }}</td>
+                                    <td>{{ permiso.empleado.id }}</td>
+                                    <td>{% if permiso.fechaInicio %}{{ permiso.fechaInicio|date('Y-m-d') }}{% endif %}</td>
+                                    <td>{% if permiso.fechaFin %}{{ permiso.fechaFin|date('Y-m-d') }}{% endif %}</td>
+                                    <td>{% if permiso.fechaRegreso %}{{ permiso.fechaRegreso|date('Y-m-d') }}{% endif %}</td>
+                                    <td>
+                                        {% if permiso.descontado %}
+                                            <span class="label label-success arrowed">SI</span>
+                                        {% else %}
+                                            <span class="label label-danger arrowed-in">NO</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ permiso.tiempoLicencia }}</td>
+                                    <td>{% if  permiso.tipo =='D' %}
+                                            <span>Dia</span>
+                                        {% elseif permiso.tipo =='H' %}
+                                            <span>Hora</span>
+                                        {% endif %}
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="navigation">
+                            {{ knp_pagination_render(permisos) }}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ form_javascript(formBuscar) }}
+{% endblock javascripts %}

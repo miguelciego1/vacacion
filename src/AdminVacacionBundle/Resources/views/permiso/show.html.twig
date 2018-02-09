@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block page_content %}
+        <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Permiso <small>Detalle de permiso</small></h2>
+
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <section class="content invoice">
+                      <!-- title row -->
+                      <div class="row">
+                        <div class="col-xs-12 invoice-header">
+                          <h1>
+                                         <img src="{{ asset('logo.png') }}" alt="..." class="logo"> Caja Pebrolera de Salud.
+                                          <small class="pull-right">Fecha de Solicitud: {{permiso.fechaSolicitud|date('Y-m-d')}}</small>
+                                      </h1>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- info row -->
+                      <div class="row invoice-info">
+                        <div class="col-sm-4 invoice-col">
+                          Informacion Personal
+                          <address>
+                                <strong>{{permiso.empleado}}</strong>
+                          </address>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 invoice-col">
+
+                                        <b>Id:</b> {{ permiso.id }}</td>
+
+                                    <br>
+                                        <b>Fechainicio :</b> {% if permiso.fechaInicio %}
+                                                                    {% if permiso.tipo =='HORAS' %}
+                                                                        {{ permiso.fechaInicio|date('H:i:s') }}
+                                                                    {% else%}
+                                                                        {{ permiso.fechaInicio|date('Y-m-d')}}
+                                                                    {% endif %}
+                                                            {% endif %}
+                                    <br>
+                                        <b>Fechafin :</b> {% if permiso.fechaFin %}
+                                                                    {% if permiso.tipo =='HORAS' %}
+                                                                        {{ permiso.fechaFin|date('H:i:s') }}
+                                                                    {% else %}
+                                                                        {{ permiso.fechaFin|date('Y-m-d ') }}
+                                                                    {% endif %}
+                                                            {% endif %}
+                                    <br>
+                                        <b>Fecharegreso :</b> {% if permiso.fechaRegreso %}
+                                                                    {% if permiso.tipo =='HORAS' %}
+                                                                        {{ permiso.fechaRegreso|date('H:i:s') }}
+                                                                    {% else %}
+                                                                        {{ permiso.fechaRegreso|date('Y-m-d') }}
+                                                                    {% endif %}
+                                                              {% endif %}
+
+
+                                    <br>
+                                        <b>Estado :</b> {% if permiso.estado == 1 %}
+                                        <span class="label label-primary arrowed-in-right arrowed">Solicitado</span>
+                                        {% elseif permiso.estado == 2 %}
+                                        <span class="label label-success arrowed">Cargado</span>
+                                        {% elseif permiso.estado == 3 %}
+                              					<span class="label label-info arrowed-in-right arrowed">No Cargado</span>
+                              					{% endif%}
+
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="col-sm-4 invoice-col">
+                            <br>
+                                <b>Tiempo :</b> {{ permiso.tiempoLicencia }}
+                            <br>
+                                <b>Unidad :</b> {{ permiso.tipo }}
+                             <br>
+                                 <b>Tipo :</b> {{ permiso.tipoPermiso.nombre }}
+
+                            <br>
+                                <b>Motivo :</b> {{ permiso.motivo }}
+                            <br>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+                      <!-- bis row will not appear when printing -->
+                      <div class="row no-print">
+                        <div class="col-xs-12">
+                          <a href="{{ path('permiso_index_admin') }}"class="btn btn-default"><i class="fa fa-repeat"></i> Volver</a>
+                      </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+{% endblock %}

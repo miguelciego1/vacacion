@@ -1,0 +1,7 @@
+services:
+#    user_vacacion.example:
+#        class: UserVacacionBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
+
+      cps_user_utilitario:
+          class: UserVacacionBundle\Utilitarios\Utilitario

@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Suspendida</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ suspendida.id }}</td>
+            </tr>
+            <tr>
+                <th>Fechainicio</th>
+                <td>{% if suspendida.fechaInicio %}{{ suspendida.fechaInicio|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fechafin</th>
+                <td>{% if suspendida.fechaFin %}{{ suspendida.fechaFin|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Dias</th>
+                <td>{{ suspendida.dias }}</td>
+            </tr>
+            <tr>
+                <th>Motivo</th>
+                <td>{{ suspendida.motivo }}</td>
+            </tr>
+            <tr>
+                <th>Creadoel</th>
+                <td>{% if suspendida.creadoEl %}{{ suspendida.creadoEl|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Modificadoel</th>
+                <td>{% if suspendida.modificadoEl %}{{ suspendida.modificadoEl|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ suspendida.estado }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('suspendida_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('suspendida_edit', { 'id': suspendida.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="description" content="Common form elements and layouts" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+
+		    <title>CPS - Sistema de Vacacion</title>
+
+		{% block stylesheets %}
+		{% endblock stylesheets %}
+		<style>
+			.logo {
+	   		 margin: 5px 0 5px 5px;
+	   		 width: 40px;
+			}
+		</style>
+		    <!-- Bootstrap -->
+		    <link href="{{ asset('gentelella/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+		    <!-- Font Awesome -->
+		    <link href="{{ asset('gentelella/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+
+		    <link href="{{ asset('gentelella/vendors/jquery-ui-1.12.1/jquery-ui.min.css') }}" rel="stylesheet">
+
+				<!-- PNotify -->
+		    <link href="{{ asset('gentelella/vendors/pnotify/dist/pnotify.css') }}" rel="stylesheet">
+		    <link href="{{ asset('gentelella/vendors/pnotify/dist/pnotify.buttons.css') }}" rel="stylesheet">
+		    <link href="{{ asset('gentelella/vendors/pnotify/dist/pnotify.nonblock.css') }}" rel="stylesheet">
+
+
+		    <!-- Custom Theme Style -->
+		    <link href="{{ asset('gentelella/build/css/custom.min.css') }}" rel="stylesheet">
+		    <link href="{{ asset('gentelella/build/css/base.css') }}" rel="stylesheet">
+
+</head>
+
+<body class="nav-md">
+			<div class="container body">
+			    <div class="main_container">
+
+
+			        {% include 'sidebar.html.twig' %}
+			        {% include 'topnav.html.twig' %}
+
+
+			        <!-- page content -->
+			        <div class="right_col" role="main">
+			            <div class="">
+							<div class="row">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									{{ render_flash_alerts() }}
+			                		{% block page_content %}{% endblock %}
+			                	</div>
+
+							</div>
+			            </div>
+			        </div>
+			        <!-- /page content -->
+
+
+			        {% include 'footer.html.twig' %}
+
+
+			    </div>
+			</div>
+
+				<!-- jQuery -->
+			    <script src="{{ asset('gentelella/vendors/jquery/dist/jquery.min.js') }}"></script>
+			    <!-- jquery ui -->
+			    <script src="{{ asset('gentelella/vendors/jquery-ui-1.12.1/jquery-ui.min.js') }}"></script>
+
+			    <script src="{{ asset('gentelella/vendors/jQuery-Timepicker-Addon-master/dist/jquery-ui-timepicker-addon.js') }}"></script>
+			    <!-- Bootstrap -->
+			    <script src="{{ asset('gentelella/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+			    <!-- FastClick -->
+			    <script src="{{ asset('gentelella/vendors/fastclick/lib/fastclick.js') }}"></script>
+			    <!-- NProgress -->
+			    <script src="{{ asset('gentelella/vendors/nprogress/nprogress.js') }}"></script>
+
+					<!-- PNotify -->
+			    <script src="{{ asset('gentelella/vendors/pnotify/dist/pnotify.js') }}"></script>
+			    <script src="{{ asset('gentelella/vendors/pnotify/dist/pnotify.buttons.js') }}"></script>
+			    <script src="{{ asset('gentelella/vendors/pnotify/dist/pnotify.nonblock.js') }}"></script>
+
+			    <script>
+            function initAjaxForm()
+            {
+                $('body').on('submit', '.ajaxForm', function (e) {
+
+                    e.preventDefault();
+
+                    $.ajax({
+                        type: $(this).attr('method'),
+                        url: $(this).attr('action'),
+                        data: $(this).serialize()
+                    })
+                        .done(function (data) {
+                            if (typeof data.message !== 'undefined') {
+                                alert(data.message);
+                            }
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            if (typeof jqXHR.responseJSON !== 'undefined') {
+                                if (jqXHR.responseJSON.hasOwnProperty('form')) {
+                                    $('#form_body').html(jqXHR.responseJSON.form);
+                                }
+
+                                $('.form_error').html(jqXHR.responseJSON.message);
+
+                            } else {
+                                alert(errorThrown);
+                            }
+
+                        });
+                });
+            };
+        </script>
+			{% block javascripts %}
+			{% endblock javascripts %}
+
+			{% block modals %}{% endblock modals %}
+
+			<!-- Custom Theme Scripts -->
+			<script src="{{ asset('gentelella/build/js/custom.min.js') }}"></script>
+
+
+</body>
+</html>

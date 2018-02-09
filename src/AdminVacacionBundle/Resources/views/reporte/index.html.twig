@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block page_content %}
+<div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2><i class="fa fa-align-left"></i> Vacacion / Baja Medica <small>Reportes</small></h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <!-- end of accordion --> 
+              <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                      <div class="panel">
+                        <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          <h4 class="panel-title">Generar Reporte de Vacacion y Bajas Medicas por fechas</h4>
+                        </a>
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                          <div class="panel-body">
+                          <div class="x_content">
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                              <div class="col-md-6 col-md-offset-1">
+                                {{form_start(form) }}
+                                {{form_widget(form)}}
+                                {{form_end(form)}}
+                              </div>
+                            </div>
+                          </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      {% if is_granted('ROLE_B') or is_granted('ROLE_A') %}<!-- ROLES BAJA MEDICA PLANILLA -->
+                    <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                      <div class="panel">
+                        <a class="panel-heading" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                          <h4 class="panel-title">Generar Reporte de Baja Medica por correlativo</h4>
+                        </a>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                          <div class="panel-body">
+                          <div class="x_content">
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                              <div class="col-md-6 col-md-offset-1">
+                            {{form_start(form2) }}
+                            {{form_widget(form2)}}
+                            {{form_end(form2)}}
+                            </div>
+                            </div>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+
+                  </div>
+                </div>
+              </div>
+{% endblock %}
+{% block javascripts %}
+{{ form_javascript(form) }}
+
+{% endblock %}

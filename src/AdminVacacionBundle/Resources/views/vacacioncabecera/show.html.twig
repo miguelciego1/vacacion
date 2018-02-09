@@ -1,0 +1,226 @@
+{% extends 'base.html.twig' %}
+
+{% block page_content %}
+    <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Vacacion <small>Detalle de vacacion</small></h2>
+
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <section class="content invoice">
+                      <!-- title row -->
+                      <div class="row">
+                        <div class="col-xs-12 invoice-header">
+                          <h1>
+                                         <img src="{{ asset('logo.png') }}" alt="..." class="logo"> Caja Petrolera de Salud.
+                                          <small class="pull-right">Fecha de creado: {{vacacionCabecera.creadoEl|date('Y-m-d')}}</small>
+                                      </h1>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- info row -->
+                      <div class="row invoice-info">
+                        <div class="col-sm-4 invoice-col">
+                          Informacion Personal
+                          <address>
+                                          <strong>{{empleado}}</strong>
+                          </address>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 invoice-col">
+                          <b>Correlativo:</b> {{vacacionCabecera.id}}
+                          <br>
+                          <br>
+                          <b>Fecha Inicio:</b> {{vacacionCabecera.fechaInicio|date('Y-m-d')}}
+                          <br>
+                          <b>Fecha Fin:</b> {{vacacionCabecera.fechaFin|date('Y-m-d')}}
+                          <br>
+                          <b>Fecha Regreso:</b> {{vacacionCabecera.fechaRegreso|date('Y-m-d')}}
+                          <br>
+                          <b>Reemplazo:</b> {{vacacionCabecera.reemplazo}}
+                          <br>
+                          <b>Estado:</b> {%if vacacionCabecera.estado==1 %}
+                            								<span class="label label-primary arrowed-in-right arrowed">Solicitado</span>
+                            							{% elseif vacacionCabecera.estado==2%}
+                            								<span class="label label-success arrowed">Aprobado</span>
+                            							{% elseif  vacacionCabecera.estado==3%}
+                            								<span class="label label-info">Historico</span>
+                            							{% else %}
+                            								<span class="label label-danger arrowed-in">Anulado</span>
+                            							{% endif%}
+                        </div>
+                         <div class="col-sm-4 invoice-col">
+                          <div class="row">
+                        <div class="col-xs-12 table">
+                          <b>Vacacion Detalles</b>
+                          <br>
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>Gestion</th>
+                                <th>Dias</th>
+                              </tr>
+                            </thead>
+                            <tfoot>
+                              <tr>
+                                <td>SubTotal</td>
+                                <td>{{vacacionCabecera.totalDias}}</td>
+                              </tr>
+                            </tfoot>
+                            <tbody>
+                              {% for vacacionDetalle in vacacionDetalles%}
+                              <tr>
+                                <td> {%if vacacionDetalle.vacacionGestion%}{{vacacionDetalle.vacacionGestion.gestion}}{% endif%}</td>
+                                <td>{{vacacionDetalle.dias}}</td>
+
+                              </tr>
+                              {% endfor%}
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+
+                      <!-- Table row -->
+                      <div class="row">
+                        <div class="col-xs-12 table">
+                          <p class="lead">Permisos Cargados:</p>
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>N°</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Fin</th>
+                                <th>Fecha Regreso</th>
+                                <th style="width: 50%">Motivo</th>
+                                <th>Tipo Permiso</th>
+                                <th>Tiempo</th>
+                                <th>Unidad</th>
+
+                              </tr>
+                            </thead>
+                            <tfoot>
+                              <tr>
+                                <td>SubTotal Permiso</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{totalDiasPermiso}}</td>
+                                <td>Dias</td>
+                              </tr>
+                            </tfoot>
+                            <tbody>
+                              {% for permiso in permisos %}
+                              <tr>
+                                <td>{{permiso.id}}</td>
+                                <td>{{permiso.fechaInicio|date('Y-m-d')}}</td>
+                                <td>{{permiso.fechaFin|date('Y-m-d')}}</td>
+                                <td>{{permiso.fechaRegreso|date('Y-m-d')}}</td>
+                                <td>{{permiso.motivo}}</td>
+                                <td>{{permiso.tipoPermiso}}</td>
+                                <td>{{permiso.tiempoLicencia}}</td>
+                                <td>{{permiso.tipo}}</td>
+                              </tr>
+                              {% endfor%}
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+
+                      <div class="row">
+                        <!-- accepted payments column -->
+                        <div class="col-xs-6">
+                          <p class="lead">Suspenciones de Vacacion:</p>
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Fin</th>
+                                <th>Dias</th>
+
+                              </tr>
+                            </thead>
+
+                            <tbody>
+                              {% set totalDiasSus=0%}
+                              {% for suspendida in suspendidas %}
+                              <tr>
+                                {% set totalDiasSus = totalDiasSus+suspendida.dias%}
+                                <td>{{suspendida.fechaInicio|date('Y-m-d')}}</td>
+                                <td>{{suspendida.fechaFin|date('Y-m-d')}}</td>
+                                <td>{{suspendida.dias}}</td>
+                              </tr>
+                              {% endfor%}
+                            </tbody>
+                            <tfoot>
+                              <tr>
+                                <td>SubTotal Suspenciones</td>
+                                <td></td>
+                                <td>{{totalDiasSus}}</td>
+                              </tr>
+                            </tfoot>
+                          </table>
+                        <!-- /.col -->
+                      </div>
+                        <!-- /.col -->
+                      <div class="col-xs-6">
+                          <p class="lead">Descuento Total de Vacacacion</p>
+                          <div class="table-responsive">
+                            <table class="table">
+                              <tbody>
+                                <tr>
+                                  <th style="width:50%">Subtotal:</th>
+                                  <td>{{vacacionCabecera.totalDias}}</td>
+                                </tr>
+                                <tr>
+                                  <th>SubTotal Permisos</th>
+                                  <td>{{totalDiasPermiso}}</td>
+                                </tr>
+                                <tr>
+                                  <th><b>Menos :</b></th>
+                                  <td></td>
+                                </tr>
+                                <tr>
+                                  <th>SubTotal Suspenciones:</th>
+                                  <td>{{totalDiasSus}}</td>
+                                </tr>
+                                 <tr>
+                                  <th></th>
+                                  <td></td>
+                                </tr>
+                                <tr>
+                                  <th>Total Dias Descuento:</th>
+                                  <td>{{vacacionCabecera.totalDias + totalDiasPermiso - totalDiasSus}}</td>
+                                </tr>
+
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+
+                      <!-- this row will not appear when printing -->
+                      <div class="row no-print">
+                        <div class="col-xs-12">
+                          <a href="{{path('vacacioncabecera_index_admin')}}" class="btn btn-default" ><i class="fa fa-list" aria-hidden="true"></i>  Ir a la lista</a>
+                      </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+{% endblock %}

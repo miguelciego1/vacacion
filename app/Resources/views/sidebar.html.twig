@@ -1,0 +1,80 @@
+<div class="col-md-3 left_col">
+    <div class="left_col scroll-view">
+        <div class="navbar nav_title" style="border: 0;">
+            <a href="#" class="site_title">
+                <img src="{{ asset('logo.png') }}" alt="..." class="logo">
+                <span class="titlepage">Caja Petrolera de Salud</span></a>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <!-- menu profile quick info -->
+        <div class="profile">
+            <div class="profile_pic">
+                <img src="{{ asset('/gentelella/production/images/user.png') }}" alt="..."
+                     class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+                <span>Bienvenido</span> <br>
+                {% if is_granted('ROLE_EMPADM') %}
+                    <span>ADMINISTRADOR</span> <br>
+                {% endif %}
+                <b style="color:white">{% if app.user.empleado %}{{ app.user.empleado.nomCompleto }}{% endif %}</b>
+
+
+            </div>
+        </div>
+        <!-- /menu profile quick info -->
+
+        <div class="clearfix"></div>
+
+        <!-- sidebar menu -->
+        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+                <h3>Menu</h3>
+                <ul class="nav side-menu">
+                    <li><a href="{{ path('calcular_fecha_new') }}"><i class="fa fa-wrench"></i> Utilitario</a></li>
+
+                    {% if is_granted('ROLE_V') %}<!-- ROLES VACACION  -->
+                    <li><a href="{{ path('vacacionconfig_index') }}"><i class="fa fa-circle" aria-hidden="true"></i>Punto de Inicio</a>
+                    </li>
+                    <li><a href="{{ path('vacacioncabecera_index_admin') }}"><i class="fa fa-clipboard"></i>
+                            Vacacion</a></li>
+                    <li><a href="{{ path('permiso_index_admin') }}"><i class="fa fa-copy"></i> Permiso</a></li>
+                    <li><a href="{{ path('vacaciongestion_index') }}"><i class="fa fa-book"></i> Gestiones</a></li>
+                    {% elseif is_granted('ROLE_B') %}<!-- ROLES BAJA MEDICA  -->
+                    <li><a href="{{ path('bajamedica_index') }}"><i class="fa fa-medkit"></i> Baja Medica</a></li>
+                    {% endif %}
+
+
+                    {% if is_granted('ROLE_BP') %}<!-- ROLES BAJA MEDICA PLANILLA -->
+                        <li><a href="{{ path('bajamedica_planilla') }}"><i class="fa fa-clipboard"></i> Planilla</a>
+                        </li>
+                    {% endif %}
+
+
+                    <!-- ROLES ADMINISTRACION  -->
+                    {% if is_granted('ROLE_A') %}
+                        <li><a href="{{ path('vacacionconfig_index') }}"><i class="fa fa-circle" aria-hidden="true"></i>Punto de Inicio</a>
+                        </li>
+                        <li><a href="{{ path('vacacioncabecera_index_admin') }}"><i class="fa fa-clipboard"></i>
+                                Vacacion</a></li>
+                        <li><a href="{{ path('permiso_index_admin') }}"><i class="fa fa-copy"></i> Permiso</a></li>
+                        <li><a href="{{ path('vacaciongestion_index') }}"><i class="fa fa-book"></i> Gestiones</a></li>
+                        <li><a href="{{ path('bajamedica_index') }}"><i class="fa fa-medkit"></i> Baja Medica</a></li>
+                        <li><a href="{{ path('bajamedica_planilla') }}"><i class="fa fa-clipboard"></i> Planilla</a>
+                        </li>
+
+                    {% endif %}
+
+
+                    <!-- REPORTE GENERALES -->
+                    <li><a href="{{ path('reporte_index') }}"> <i class="fa fa-bar-chart"></i> Reportes</a></li>
+                </ul>
+            </div>
+
+        </div>
+        <!-- /sidebar menu -->
+
+    </div>
+</div>

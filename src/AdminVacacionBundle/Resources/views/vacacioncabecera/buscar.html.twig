@@ -1,0 +1,16 @@
+<div class="well" style="overflow: auto">
+    {{form_start(formBuscar, {'attr': {'class': 'form-horizontal'}})}}
+
+
+    <div class="control-group">
+        <div class="col-md-8 col-sm-8">
+        {{form_row(formBuscar.empleado)}}
+        <input type="Submit" class="btn btn-info" value="Buscar">
+        <a href="{{path('vacacioncabecera_index_admin')}}" class="btn btn-default"><i class="fa fa-list-alt" aria-hidden="true"></i> Todos</a>
+        </div>
+
+
+    </div>
+  {{form_end(formBuscar)}}
+
+</div>

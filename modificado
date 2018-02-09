@@ -1,0 +1,7 @@
+-nuevo form type en adminVacacinoBundle
+-nuevo metodo (new ) en PermidoController
+-twig boton pemiso nuevo
+-entidad uservacacionbundle_permiso setFechas
+-utilitario
+-vacacioncabeceracontroller AdminVacacionBundle
+-DefaultController UserVacacionBundle
